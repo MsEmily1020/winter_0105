@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 public class HalloweenMain extends JFrame {
 	Random random = new Random();
 	JPanel pan = new JPanel(null);
-	
+
 	//모양 바꾸는 박스
 	JComboBox<String> cbHuman = new JComboBox<String>("human,zombie".split(","));
 	String[] fallS = "pumpkin,skeleton,bat".split(",");
@@ -31,7 +31,7 @@ public class HalloweenMain extends JFrame {
 	JLabel fall = new JLabel((new ImageIcon("image/pumpkin.jpg")));
 	JLabel get = new JLabel(new ImageIcon("image/candy.jpg"));
 	JLabel scoreLb = new JLabel("점수 : 0");
-	
+
 	int score = 0;
 
 	public HalloweenMain() {
@@ -48,15 +48,15 @@ public class HalloweenMain extends JFrame {
 		JButton btnStart = new JButton("게임시작");
 		btnStart.addActionListener(btnL);
 		panN.add(btnStart);
-		
+
 		//사람 바꾸는 박스
 		panN.add(cbHuman);
 		cbHuman.addItemListener(comboL);
-		
+
 		//장애물 바꾸는 박스(점수 감소)
 		panN.add(cbFall);
 		cbFall.addItemListener(comboL);
-		
+
 		//캔디 바꾸는 박스(점수 획득)
 		panN.add(cbGet);
 		cbGet.addItemListener(comboL);
@@ -82,7 +82,7 @@ public class HalloweenMain extends JFrame {
 			requestFocus();
 
 			HalloweenThread t = new HalloweenThread();
-			t.start();	
+			t.start();
 		}
 	};
 
@@ -108,7 +108,7 @@ public class HalloweenMain extends JFrame {
 				icon = new ImageIcon("images/" + imgName + ".gif");
 				fall.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
 			}
-			
+
 			//점수 획득
 			else if(e.getSource() == cbGet) {
 				switch (cbGet.getSelectedIndex()) {
@@ -124,7 +124,7 @@ public class HalloweenMain extends JFrame {
 				}
 				get.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
 			} 
-			
+
 			else if(e.getSource() == cbHuman) {
 				switch (cbHuman.getSelectedIndex()) {
 				case 0:
@@ -134,7 +134,7 @@ public class HalloweenMain extends JFrame {
 					imgName = "zombie";
 					break;
 				}
-				
+
 				human.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
 			}
 			setFocusable(true);
@@ -146,7 +146,7 @@ public class HalloweenMain extends JFrame {
 		new HalloweenMain().setVisible(true);
 	}
 
-	public class HalloweenThread extends Thread{ 
+	public class HalloweenThread extends Thread{
 		@Override
 		public void run() {
 			fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
@@ -169,6 +169,7 @@ public class HalloweenMain extends JFrame {
 				if(fall.getY() + fall.getHeight() >= human.getY()) {
 					//범위 안에 들어왔을 때 (획득 o)
 					if((fall.getX() + 30 >= human.getX()) && (fall.getWidth() + fall.getX() - 30 <= human.getWidth() + human.getX())) {
+						if(score % 4 == 0) score -= score / 4 * 2; //숫자 4의 배수는 패널티
 						score--;
 						if(score == -1) break;
 						fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
@@ -184,6 +185,7 @@ public class HalloweenMain extends JFrame {
 				if(get.getY() + get.getHeight() >= human.getY()) {
 					//범위 안에 들어왔을 때 (획득 o)
 					if((get.getX() + 30 >= human.getX()) && (get.getWidth() + get.getX() - 30 <= human.getWidth() + human.getX())) {
+						if(score % 7 == 0) score += score / 7 * 2; //숫자 7의 배수는 축복
 						score++;
 						get.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
