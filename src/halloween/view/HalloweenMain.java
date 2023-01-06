@@ -20,6 +20,7 @@ public class HalloweenMain extends JFrame {
 	Random random = new Random();
 	JPanel pan = new JPanel(null);
 	
+	//모양 바꾸는 박스
 	JComboBox<String> cbHuman = new JComboBox<String>("human,zombie".split(","));
 	String[] pumpkinS = "pumpkin,skeleton,bat".split(",");
 	JComboBox<String> cbPump = new JComboBox<String>(pumpkinS);
@@ -34,26 +35,37 @@ public class HalloweenMain extends JFrame {
 	int score = 0;
 
 	public HalloweenMain() {
+		//배경
 		pan.setBackground(Color.white);
 		JPanel panN = new JPanel();
 		panN.setBackground(Color.white);
 
+		//사람
+		human.setBounds(230, 420, 100, 100);
+		pan.add(human);
+
+		//게임 시작 버튼
 		JButton btnStart = new JButton("게임시작");
 		btnStart.addActionListener(btnL);
 		panN.add(btnStart);
+		
+		//사람 바꾸는 박스
 		panN.add(cbHuman);
 		cbHuman.addItemListener(comboL);
+		
+		//장애물 바꾸는 박스(점수 감소)
 		panN.add(cbPump);
 		cbPump.addItemListener(comboL);
+		
+		//캔디 바꾸는 박스(점수 획득)
 		panN.add(cbCandy);
 		cbCandy.addItemListener(comboL);
 
+		//점수
+		panN.add(scoreLb);
+
 		add(pan, "Center");
 		add(panN, "North");
-
-		human.setBounds(230, 420, 100, 100);
-		pan.add(human);
-		panN.add(scoreLb);
 
 		setTitle("할로윈피하기게임");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -80,7 +92,7 @@ public class HalloweenMain extends JFrame {
 			ImageIcon icon = null;
 			String imgName = null;
 
-			//점수 감소
+			//점수 감소 (장애물)
 			if(e.getSource() == cbPump) {
 				switch (cbPump.getSelectedIndex()) {
 				case 0:
