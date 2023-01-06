@@ -89,54 +89,10 @@ public class HalloweenMain extends JFrame {
 	ItemListener comboL = new ItemListener() {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			ImageIcon icon = null;
-			String imgName = null;
+			fall.setIcon(new ImageIcon("image/" + (String)cbFall.getSelectedItem() + ".jpg"));
+			get.setIcon(new ImageIcon("image/" + (String)cbGet.getSelectedItem() + ".jpg"));
+			human.setIcon(new ImageIcon("image/" + (String)cbHuman.getSelectedItem() + ".jpg"));
 
-			//점수 감소 (장애물)
-			if(e.getSource() == cbFall) {
-				switch (cbFall.getSelectedIndex()) {
-				case 0:
-					imgName = "pumpkin";
-					break;
-				case 1:
-					imgName = "skeleton";
-					break;
-				case 2:
-					imgName = "bat";
-					break;
-				}
-				icon = new ImageIcon("images/" + imgName + ".gif");
-				fall.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
-			}
-
-			//점수 획득
-			else if(e.getSource() == cbGet) {
-				switch (cbGet.getSelectedIndex()) {
-				case 0:
-					imgName = "candy";
-					break;
-				case 1:
-					imgName = "star";
-					break;
-				case 2:
-					imgName = "cat";
-					break;
-				}
-				get.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
-			} 
-
-			else if(e.getSource() == cbHuman) {
-				switch (cbHuman.getSelectedIndex()) {
-				case 0:
-					imgName = "human";
-					break;
-				case 1:
-					imgName = "zombie";
-					break;
-				}
-
-				human.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
-			}
 			setFocusable(true);
 			requestFocus();
 		}
@@ -146,7 +102,7 @@ public class HalloweenMain extends JFrame {
 		new HalloweenMain().setVisible(true);
 	}
 
-	public class HalloweenThread extends Thread{
+	public class HalloweenThread extends Thread {
 		@Override
 		public void run() {
 			fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
