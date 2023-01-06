@@ -152,7 +152,7 @@ public class HalloweenMain extends JFrame {
 							get.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
 				}
-
+				
 				scoreLb.setText("점수 : " + score);
 			}			
 		}
