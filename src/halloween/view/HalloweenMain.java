@@ -22,14 +22,14 @@ public class HalloweenMain extends JFrame {
 	
 	//모양 바꾸는 박스
 	JComboBox<String> cbHuman = new JComboBox<String>("human,zombie".split(","));
-	String[] pumpkinS = "pumpkin,skeleton,bat".split(",");
-	JComboBox<String> cbPump = new JComboBox<String>(pumpkinS);
-	String[] candyS = "candy,star,cat".split(",");
-	JComboBox<String> cbCandy = new JComboBox<String>(candyS);
+	String[] fallS = "pumpkin,skeleton,bat".split(",");
+	JComboBox<String> cbFall = new JComboBox<String>(fallS);
+	String[] getS = "candy,star,cat".split(",");
+	JComboBox<String> cbGet = new JComboBox<String>(getS);
 
 	JLabel human = new JLabel(new ImageIcon("image/human.jpg"));
-	JLabel pumpkin = new JLabel((new ImageIcon("image/pumpkin.jpg")));
-	JLabel candy = new JLabel(new ImageIcon("image/candy.jpg"));
+	JLabel fall = new JLabel((new ImageIcon("image/pumpkin.jpg")));
+	JLabel get = new JLabel(new ImageIcon("image/candy.jpg"));
 	JLabel scoreLb = new JLabel("점수 : 0");
 	
 	int score = 0;
@@ -54,12 +54,12 @@ public class HalloweenMain extends JFrame {
 		cbHuman.addItemListener(comboL);
 		
 		//장애물 바꾸는 박스(점수 감소)
-		panN.add(cbPump);
-		cbPump.addItemListener(comboL);
+		panN.add(cbFall);
+		cbFall.addItemListener(comboL);
 		
 		//캔디 바꾸는 박스(점수 획득)
-		panN.add(cbCandy);
-		cbCandy.addItemListener(comboL);
+		panN.add(cbGet);
+		cbGet.addItemListener(comboL);
 
 		//점수
 		panN.add(scoreLb);
@@ -93,8 +93,8 @@ public class HalloweenMain extends JFrame {
 			String imgName = null;
 
 			//점수 감소 (장애물)
-			if(e.getSource() == cbPump) {
-				switch (cbPump.getSelectedIndex()) {
+			if(e.getSource() == cbFall) {
+				switch (cbFall.getSelectedIndex()) {
 				case 0:
 					imgName = "pumpkin";
 					break;
@@ -106,12 +106,12 @@ public class HalloweenMain extends JFrame {
 					break;
 				}
 				icon = new ImageIcon("images/" + imgName + ".gif");
-				pumpkin.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
+				fall.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
 			}
 			
 			//점수 획득
-			else if(e.getSource() == cbCandy) {
-				switch (cbCandy.getSelectedIndex()) {
+			else if(e.getSource() == cbGet) {
+				switch (cbGet.getSelectedIndex()) {
 				case 0:
 					imgName = "candy";
 					break;
@@ -122,7 +122,7 @@ public class HalloweenMain extends JFrame {
 					imgName = "cat";
 					break;
 				}
-				candy.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
+				get.setIcon(new ImageIcon("image/" + imgName + ".jpg"));
 			} 
 			
 			else if(e.getSource() == cbHuman) {
@@ -149,15 +149,15 @@ public class HalloweenMain extends JFrame {
 	public class HalloweenThread extends Thread{ 
 		@Override
 		public void run() {
-			pumpkin.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
-			candy.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+			fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+			get.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 
 			while (true) {
-				pan.add(pumpkin);
-				pan.add(candy);
+				pan.add(fall);
+				pan.add(get);
 
-				pumpkin.setLocation(pumpkin.getX(), pumpkin.getY() + 15);
-				candy.setLocation(candy.getX(), candy.getY() + 25);
+				fall.setLocation(fall.getX(), fall.getY() + 15);
+				get.setLocation(get.getX(), get.getY() + 25);
 
 				try {
 					sleep(300);
@@ -166,32 +166,32 @@ public class HalloweenMain extends JFrame {
 				}
 
 				//호박 (점수 감소)
-				if(pumpkin.getY() + pumpkin.getHeight() >= human.getY()) {
+				if(fall.getY() + fall.getHeight() >= human.getY()) {
 					//범위 안에 들어왔을 때 (획득 o)
-					if((pumpkin.getX() + 30 >= human.getX()) && (pumpkin.getWidth() + pumpkin.getX() - 30 <= human.getWidth() + human.getX())) {
+					if((fall.getX() + 30 >= human.getX()) && (fall.getWidth() + fall.getX() - 30 <= human.getWidth() + human.getX())) {
 						score--;
 						if(score == -1) break;
-						pumpkin.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+						fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
 
 					//획득 x
 					else {
-						if(pumpkin.getY() >= 450) 
-							pumpkin.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+						if(fall.getY() >= 450) 
+							fall.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
 				}
 				//캔디 (점수 증가)
-				if(candy.getY() + candy.getHeight() >= human.getY()) {
+				if(get.getY() + get.getHeight() >= human.getY()) {
 					//범위 안에 들어왔을 때 (획득 o)
-					if((candy.getX() + 30 >= human.getX()) && (candy.getWidth() + candy.getX() - 30 <= human.getWidth() + human.getX())) {
+					if((get.getX() + 30 >= human.getX()) && (get.getWidth() + get.getX() - 30 <= human.getWidth() + human.getX())) {
 						score++;
-						candy.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+						get.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
 
 					//획득 x
 					else {
-						if(candy.getY() >= 450) 
-							candy.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
+						if(get.getY() >= 450) 
+							get.setBounds(random.nextInt(500), random.nextInt(10), 100, 100);
 					}
 				}
 
